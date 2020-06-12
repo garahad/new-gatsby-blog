@@ -54,7 +54,7 @@ export default ({ data, location }) => {
     Storage.setCategory(category)
   })
 
-  const selectCategory = category => {
+  const selectCategory = (category) => {
     setCategory(category)
     ScrollManager.go(DEST_POS)
   }
@@ -65,16 +65,25 @@ export default ({ data, location }) => {
     const doesNeedMore = () =>
       posts.length > countRef.current * countOfInitialPost
 
-    return EventManager.toFit(() => setCount(prev => prev + 1), {
+    return EventManager.toFit(() => setCount((prev) => prev + 1), {
       dismissCondition: () => !isTriggerPos(),
       triggerCondition: () => isTriggerPos() && doesNeedMore(),
     })()
   }
 
+  console.log('categories', categories)
+  console.log('category', category)
+  console.log('selectCategory', selectCategory)
+
   return (
     <Layout location={location} title={siteMetadata.title}>
       <Head title={HOME_TITLE} keywords={siteMetadata.keywords} />
       <Bio />
+      {/* <div
+        style={{
+          display: 'grid',
+        }}
+      > */}
       <Category
         categories={categories}
         category={category}
@@ -86,6 +95,7 @@ export default ({ data, location }) => {
         count={count}
         category={category}
       />
+      {/* </div> */}
     </Layout>
   )
 }
