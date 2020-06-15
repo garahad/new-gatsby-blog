@@ -8,6 +8,7 @@
     "url": "https://github.com/JaeYeopHan/gatsby-starter-bee/issues"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.28",
     "gatsby": "^2.2.8",
     "gatsby-image": "^2.0.34",
     "gatsby-plugin-feed": "^2.1.0",
@@ -40,6 +41,7 @@
     "react": "^16.8.1",
     "react-disqus-comments": "^1.4.0",
     "react-dom": "^16.8.1",
+    "react-headroom": "^3.0.0",
     "react-helmet": "^5.2.0",
     "react-switch": "^5.0.0",
     "react-typography": "^0.16.13",

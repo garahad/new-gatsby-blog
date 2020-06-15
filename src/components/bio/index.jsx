@@ -7,7 +7,7 @@ import './index.scss'
 export const Bio = () => (
   <StaticQuery
     query={bioQuery}
-    render={data => {
+    render={(data) => {
       const { author, social, introduction } = data.site.siteMetadata
 
       return (
@@ -29,7 +29,7 @@ export const Bio = () => (
                 </Link>
                 <div className="author-introduction">{introduction}</div>
                 <p className="author-socials">
-                  {social.github && (
+                  {/* {social.github && (
                     <a href={`https://github.com/${social.github}`}>GitHub</a>
                   )}
                   {social.medium && (
@@ -49,7 +49,7 @@ export const Bio = () => (
                     <a href={`https://www.linkedin.com/in/${social.linkedin}/`}>
                       LinkedIn
                     </a>
-                  )}
+                  )} */}
                 </p>
               </div>
             </div>

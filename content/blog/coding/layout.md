@@ -1,7 +1,7 @@
 ---
 title: '1분 코딩 레이아웃 강의'
 date: 2020-6-11 16:21:13
-category: '코딩'
+category: 'coding'
 draft: false
 ---
 

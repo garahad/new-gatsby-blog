@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { graphql } from 'gatsby'
 
 import * as Elements from '../components/elements'
@@ -8,15 +8,17 @@ import { PostTitle } from '../components/post-title'
 import { PostDate } from '../components/post-date'
 import { PostContainer } from '../components/post-container'
 import { SocialShare } from '../components/social-share'
-import { SponsorButton } from '../components/sponsor-button'
+// import { SponsorButton } from '../components/sponsor-button'
 import { Bio } from '../components/bio'
 import { PostNavigator } from '../components/post-navigator'
-import { Disqus } from '../components/disqus'
+// import { Disqus } from '../components/disqus'
 import { Utterences } from '../components/utterances'
 import * as ScrollManager from '../utils/scroll'
+// import * as Storage from '../utils/storage'
 
 import '../styles/code.scss'
 import 'katex/dist/katex.min.css'
+// import { CATEGORY_TYPE } from '../constants'
 
 export default ({ data, pageContext, location }) => {
   useEffect(() => {
@@ -34,7 +36,7 @@ export default ({ data, pageContext, location }) => {
     : undefined
 
   return (
-    <Layout location={location} title={title}>
+    <Layout {...{ title, location }}>
       <Head
         title={postTitle}
         description={post.excerpt}
@@ -86,13 +88,13 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
-        thumbnail {
-          childImageSharp {
-            fixed(width: 800) {
-              src
-            }
-          }
-        }
+        # thumbnail {
+        #   childImageSharp {
+        #     fixed(width: 800) {
+        #       src
+        #     }
+        #   }
+        # }
       }
     }
   }
