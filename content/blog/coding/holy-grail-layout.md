@@ -1,7 +1,7 @@
 ---
 title: 'holy grail layout 만들기'
 date: 2020-6-11 16:21:13
-category: '코딩'
+category: 'coding'
 draft: false
 ---
 

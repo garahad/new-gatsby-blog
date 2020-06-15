@@ -1,6 +1,21 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+// exports.onCreatePage = async ({ page, actions }) => {
+//   const { createPage } = actions
+
+//   console.log('page', page)
+
+//   if (page.path.match(/^\/*/)) {
+//     console.log('hello')
+//     createPage({
+//       path: `/${page.path}`,
+//       matchPath: '/*',
+//       component: path.resolve('./src/templates/catSelected.js'),
+//     })
+//   }
+// }
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -27,15 +42,15 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
-    `
-  ).then(result => {
+    `,
+  ).then((result) => {
     if (result.errors) {
       throw result.errors
     }
 
     // Create blog posts pages.
     const posts = result.data.allMarkdownRemark.edges.filter(
-      ({ node }) => !node.frontmatter.draft && !!node.frontmatter.category
+      ({ node }) => !node.frontmatter.draft && !!node.frontmatter.category,
     )
 
     posts.forEach((post, index) => {

@@ -2,22 +2,17 @@ import React, { useState, useEffect, useRef } from 'react'
 import { graphql } from 'gatsby'
 import _ from 'lodash'
 
-import { Layout } from '../layout'
-import { Bio } from '../components/bio'
-import { Head } from '../components/head'
-import { Category } from '../components/category'
-import { Contents } from '../components/contents'
+import { Layout } from '../../layout'
+import { Contents } from '../../components/contents'
 
-import * as ScrollManager from '../utils/scroll'
-import * as Storage from '../utils/storage'
-import * as IOManager from '../utils/visible'
-import * as EventManager from '../utils/event-manager'
-import * as Dom from '../utils/dom'
+import * as ScrollManager from '../../utils/scroll'
+import * as Storage from '../../utils/storage'
+import * as IOManager from '../../utils/visible'
+import * as EventManager from '../../utils/event-manager'
+import * as Dom from '../../utils/dom'
 
-import { HOME_TITLE, CATEGORY_TYPE } from '../constants'
-import { rhythm } from '../utils/typography'
+import { CATEGORY_TYPE } from '../../constants'
 
-// const DEST_POS = 316
 const BASE_LINE = 80
 
 function getDistance(currentPos) {
@@ -29,11 +24,13 @@ export default ({ data, location }) => {
   const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
   const [count, setCount] = useState(initialCount)
   const countRef = useRef(count)
-  // const [category, setCategory] = useState(initialCategory)
+  const nowCategory = location.pathname.slice(1)
 
   const { siteMetadata } = data.site
   const { countOfInitialPost } = siteMetadata.configs
-  const posts = data.allMarkdownRemark.edges
+  const posts = data.allMarkdownRemark.edges.filter(
+    (el) => el.node.frontmatter.category === nowCategory,
+  )
 
   useEffect(() => {
     window.addEventListener(`scroll`, onScroll, { passive: false })
@@ -68,9 +65,7 @@ export default ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteMetadata.title}>
-      {/* <Head title={HOME_TITLE} keywords={siteMetadata.keywords} /> */}
-      <Bio />
-      <h1 style={{ marginBottom: '0.5em' }}>ALL POSTS</h1>
+      <h1 style={{ marginBottom: '0.5em', marginTop: '0' }}>{nowCategory}</h1>
       <Contents
         posts={posts}
         countOfInitialPost={countOfInitialPost}
@@ -81,7 +76,7 @@ export default ({ data, location }) => {
   )
 }
 
-export const pageQuery = graphql`
+export const categoryQuery = graphql`
   query {
     site {
       siteMetadata {

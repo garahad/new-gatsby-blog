@@ -1,9 +1,9 @@
 ---
 title: 'Welcome Bee starter'
 date: 2019-2-6 16:21:13
-category: 'development'
+category: 'investment'
 thumbnail: './images/hello.png'
-draft: true
+draft: false
 ---
 
 ![](./images/hello.png)
@@ -38,7 +38,7 @@ import React from 'react'
 const TEMPLATE = 'gatsby-starter-bee'
 
 class Foo extends React.Component {
-  handleClick = val => {
+  handleClick = (val) => {
     if (val === 'bar') {
       return 1
     } else if (val !== 'zoo') {
