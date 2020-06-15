@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { graphql, useStaticQuery } from 'gatsby'
 import _ from 'lodash'
 
@@ -105,9 +105,10 @@ export const Layout = ({
   //   setCategory(category)
   //   ScrollManager.go(DEST_POS)
   // }
-
-  Dom.addClassToBody(THEME.DARK)
-  Dom.removeClassToBody(THEME.LIGHT)
+  useEffect(() => {
+    Dom.addClassToBody(THEME.DARK)
+    Dom.removeClassToBody(THEME.LIGHT)
+  }, [])
 
   return (
     <React.Fragment>
