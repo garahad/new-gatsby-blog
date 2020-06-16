@@ -2,6 +2,7 @@
 title: 'css flex에 대해'
 date: 2020-6-11 16:21:13
 category: 'coding'
+subcategory: 'css'
 draft: false
 ---
 
