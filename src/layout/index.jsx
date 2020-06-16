@@ -71,6 +71,7 @@ export const categoryQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             # title
             category
+            subcategory
             # draft
           }
         }
@@ -79,15 +80,7 @@ export const categoryQuery = graphql`
   }
 `
 
-export const Layout = ({
-  location,
-  title,
-  children,
-  // data,
-  // categories,
-  // category,
-  // selectCategory,
-}) => {
+export const Layout = ({ location, title, children }) => {
   const isListPage = location.pathname.slice(1).split('/').length < 3
 
   const rootPath = `${__PATH_PREFIX__}/`
@@ -95,16 +88,15 @@ export const Layout = ({
   const data = useStaticQuery(categoryQuery)
   const posts = data.allMarkdownRemark.edges
   const categories = _.uniq(posts.map(({ node }) => node.frontmatter.category))
+  const categoryObj = posts
+    .filter(({ node }) => node.frontmatter.subcategory)
+    .map(({ node }) => {
+      return { [node.frontmatter.category]: node.frontmatter.subcategory }
+    })
 
   const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
   const [category, setCategory] = useState(initialCategory)
 
-  // const DEST_POS = 316
-
-  // const selectCategory = (category) => {
-  //   setCategory(category)
-  //   ScrollManager.go(DEST_POS)
-  // }
   useEffect(() => {
     Dom.addClassToBody(THEME.DARK)
     Dom.removeClassToBody(THEME.LIGHT)
@@ -112,27 +104,30 @@ export const Layout = ({
 
   return (
     <React.Fragment>
-      <Top title={title} location={location} rootPath={rootPath} />
-      {/* <ThemeSwitch /> */}
-      {/* <Header title={title} location={location} rootPath={rootPath} /> */}
+      <Top
+        title={title}
+        location={location}
+        rootPath={rootPath}
+        posts={posts}
+        categories={categories}
+        category={category}
+        selectCategory={setCategory}
+        categoryObj={categoryObj}
+      />
       <div
         css={containerCss}
         style={{
           gridTemplateColumns: isListPage ? '15em 1fr' : '15em 1fr 15em',
         }}
       >
-        <div
-          // className="category-sidebar"
-          // style={{
-          //   borderRight: '0.1px solid gray',
-          // }}
-          css={categoryCss}
-        >
-          {/* 카테고리 */}
+        <div css={categoryCss}>
           <Category
             categories={categories}
             category={category}
             selectCategory={setCategory}
+            categoryObj={categoryObj}
+            posts={posts}
+            location={location}
           />
         </div>
         <div></div>
@@ -141,6 +136,7 @@ export const Layout = ({
             marginLeft: `auto`,
             marginRight: `auto`,
             maxWidth: rhythm(30),
+            // minWidth: rhythm(25),
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
           }}
         >

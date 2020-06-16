@@ -90,13 +90,22 @@ export const categoryQuery = graphql`
   }
 `
 
-export const Top = ({ title, location, rootPath }) => {
+export const Top = ({
+  title,
+  location,
+  rootPath,
+  posts,
+  categories,
+  category,
+  selectCategory,
+  categoryObj,
+}) => {
   // const isRoot = location.pathname === rootPath
   const data = useStaticQuery(categoryQuery)
-  const posts = data.allMarkdownRemark.edges
-  const categories = _.uniq(posts.map(({ node }) => node.frontmatter.category))
-  const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
-  const [category, setCategory] = useState(initialCategory)
+  // const posts = data.allMarkdownRemark.edges
+  // const categories = _.uniq(posts.map(({ node }) => node.frontmatter.category))
+  // const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
+  // const [category, setCategory] = useState(initialCategory)
 
   const [isCategoryOpen, setCategoryToggle] = useState(false)
 
@@ -124,7 +133,10 @@ export const Top = ({ title, location, rootPath }) => {
         <Category
           categories={categories}
           category={category}
-          selectCategory={setCategory}
+          selectCategory={selectCategory}
+          categoryObj={categoryObj}
+          posts={posts}
+          location={location}
         />
       </div>
     </div>
