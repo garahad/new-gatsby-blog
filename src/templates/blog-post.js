@@ -35,8 +35,10 @@ export default ({ data, pageContext, location }) => {
     ? `${siteUrl}${thumbnail.childImageSharp.fixed.src}`
     : undefined
 
+  const isListPage = false
+
   return (
-    <Layout {...{ title, location }}>
+    <Layout {...{ title, location, isListPage }}>
       <Head
         title={postTitle}
         description={post.excerpt}

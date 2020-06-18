@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 
-export const Item = ({
-  title,
-  category,
-  selectCategory,
-  categoryObj,
-  posts,
-  location,
-}) => {
-  let nowCategory = location && location.pathname.slice(1)
+export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
+  let locationName = location.pathname
+  if (location.pathname[location.pathname.length - 1] === '/') {
+    locationName = location.pathname.slice(0, -1)
+  }
+  let nowCategory = locationName.split('/')[1]
   let nowSubCategory
-  if (nowCategory && nowCategory.indexOf('/') !== -1) {
-    let array = nowCategory.split('/')
-    nowCategory = array[0]
-    nowSubCategory = array[array.length - 1]
+
+  if (
+    (isListPage && locationName.split('/').length === 3) ||
+    (!isListPage && locationName.split('/').length >= 4)
+  ) {
+    nowSubCategory = locationName.split('/')[2]
   }
 
   const subCategories =
@@ -38,15 +37,10 @@ export const Item = ({
               ? elm.node.frontmatter.subcategory === oneSub
               : false),
         ).length
-      // console.log('active', active)
-      // console.log('oneSub', oneSub)
+
       return (
         <div key={oneSub}>
-          <div
-            onClick={() => {
-              selectCategory(title)
-            }}
-          >
+          <div>
             <Link
               to={`/${title}/${oneSub}`}
               style={{
@@ -69,26 +63,16 @@ export const Item = ({
 
   return (
     <div style={{ marginBottom: '1.5em', fontSize: '0.9rem' }}>
-      <li
-        // className="item"
-        // role="tab"
-        aria-selected={category === title ? 'true' : 'false'}
-      >
-        <div
-          onClick={() => {
-            selectCategory(title)
+      <li>
+        <Link
+          to={`/${title}`}
+          style={{
+            color:
+              !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'white',
           }}
         >
-          <Link
-            to={`/${title}`}
-            style={{
-              color:
-                !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'white',
-            }}
-          >
-            {title} ({categoryBlogNumber})
-          </Link>
-        </div>
+          {title} ({categoryBlogNumber})
+        </Link>
       </li>
       {subCategories && subCategories.length > 0 ? (
         <div style={{ marginLeft: '1em' }}>{subCategoryList}</div>
