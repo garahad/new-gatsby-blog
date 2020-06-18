@@ -1,14 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import React, { useState } from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import { GitHubIcon } from '../social-share/github-icon'
+import { useState } from 'react'
+import { Link } from 'gatsby'
 import _ from 'lodash'
 
 import './index.scss'
 import { Category } from '../category'
-import { CATEGORY_TYPE } from '../../constants'
-import * as Storage from '../../utils/storage'
 
 const categoryMark = css`
   position: relative;
@@ -58,60 +55,11 @@ const toggleCategoryCss = css`
   z-index: 2;
 `
 
-export const categoryQuery = graphql`
-  query {
-    # site {
-    #   siteMetadata {
-    #     title
-    #     configs {
-    #       countOfInitialPost
-    #     }
-    #   }
-    # }
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { category: { ne: null }, draft: { eq: false } } }
-    ) {
-      edges {
-        node {
-          # excerpt(pruneLength: 200, truncate: true)
-          # fields {
-          #   slug
-          # }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            # title
-            category
-            # draft
-          }
-        }
-      }
-    }
-  }
-`
-
-export const Top = ({
-  title,
-  location,
-  rootPath,
-  posts,
-  categories,
-  category,
-  selectCategory,
-  categoryObj,
-}) => {
-  // const isRoot = location.pathname === rootPath
-  const data = useStaticQuery(categoryQuery)
-  // const posts = data.allMarkdownRemark.edges
-  // const categories = _.uniq(posts.map(({ node }) => node.frontmatter.category))
-  // const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
-  // const [category, setCategory] = useState(initialCategory)
-
+export const Top = ({ title, location, posts, categories, categoryObj }) => {
   const [isCategoryOpen, setCategoryToggle] = useState(false)
 
   return (
     <div className="top" style={{ position: 'fixed' }}>
-      {/* {!isRoot && ( */}
       <button
         css={categoryMark}
         className={isCategoryOpen ? 'active' : ''}
@@ -123,7 +71,7 @@ export const Top = ({
         {title}
       </Link>
       {/* )} */}
-      <GitHubIcon />
+      {/* <GitHubIcon /> */}
       <div
         style={{
           display: isCategoryOpen ? 'block' : 'none',
@@ -132,8 +80,6 @@ export const Top = ({
       >
         <Category
           categories={categories}
-          category={category}
-          selectCategory={selectCategory}
           categoryObj={categoryObj}
           posts={posts}
           location={location}

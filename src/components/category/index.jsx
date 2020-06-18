@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Item } from './item'
 import { rhythm } from '../../utils/typography'
@@ -7,11 +7,10 @@ import './index.scss'
 
 export const Category = ({
   categories,
-  category,
-  selectCategory,
   categoryObj,
   posts,
   location,
+  isListPage,
 }) => {
   return (
     <ul
@@ -23,13 +22,9 @@ export const Category = ({
     >
       {categories.map((item, idx) => (
         <Item
+          {...{ categoryObj, posts, location, isListPage }}
           key={idx}
           title={item}
-          category={category}
-          selectCategory={selectCategory}
-          categoryObj={categoryObj}
-          posts={posts}
-          location={location}
         />
       ))}
     </ul>

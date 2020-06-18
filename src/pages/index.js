@@ -1,83 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
 import _ from 'lodash'
 
-import { Layout } from '../layout'
-import { Bio } from '../components/bio'
-import { Head } from '../components/head'
-import { Category } from '../components/category'
-import { Contents } from '../components/contents'
-
-import * as ScrollManager from '../utils/scroll'
-import * as Storage from '../utils/storage'
-import * as IOManager from '../utils/visible'
-import * as EventManager from '../utils/event-manager'
-import * as Dom from '../utils/dom'
-
-import { HOME_TITLE, CATEGORY_TYPE } from '../constants'
-import { rhythm } from '../utils/typography'
-
-// const DEST_POS = 316
-const BASE_LINE = 80
-
-function getDistance(currentPos) {
-  return Dom.getDocumentHeight() - currentPos
-}
+import useIndexHooks from '../hooks/useIndexHooks'
+import IndexPage from '../layout/IndexPage'
 
 export default ({ data, location }) => {
-  const initialCount = Storage.getCount(1)
-  const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL)
-  const [count, setCount] = useState(initialCount)
-  const countRef = useRef(count)
-  // const [category, setCategory] = useState(initialCategory)
-
-  const { siteMetadata } = data.site
-  const { countOfInitialPost } = siteMetadata.configs
   const posts = data.allMarkdownRemark.edges
-
-  useEffect(() => {
-    window.addEventListener(`scroll`, onScroll, { passive: false })
-    IOManager.init()
-    ScrollManager.init()
-
-    return () => {
-      window.removeEventListener(`scroll`, onScroll, { passive: false })
-      IOManager.destroy()
-      ScrollManager.destroy()
-    }
-  }, [])
-
-  useEffect(() => {
-    countRef.current = count
-    IOManager.refreshObserver()
-    Storage.setCount(count)
-    Storage.setCategory(initialCategory)
-  })
-
-  const onScroll = () => {
-    const currentPos = window.scrollY + window.innerHeight
-    const isTriggerPos = () => getDistance(currentPos) < BASE_LINE
-    const doesNeedMore = () =>
-      posts.length > countRef.current * countOfInitialPost
-
-    return EventManager.toFit(() => setCount((prev) => prev + 1), {
-      dismissCondition: () => !isTriggerPos(),
-      triggerCondition: () => isTriggerPos() && doesNeedMore(),
-    })()
-  }
+  const {
+    isListPage,
+    siteMetadata,
+    countOfInitialPost,
+    count,
+    initialCategory,
+  } = useIndexHooks({ data, posts })
 
   return (
-    <Layout location={location} title={siteMetadata.title}>
-      {/* <Head title={HOME_TITLE} keywords={siteMetadata.keywords} /> */}
-      <Bio />
-      <h1 style={{ marginBottom: '0.5em' }}>ALL POSTS</h1>
-      <Contents
-        posts={posts}
-        countOfInitialPost={countOfInitialPost}
-        count={count}
-        category={initialCategory}
-      />
-    </Layout>
+    <IndexPage
+      {...{
+        location,
+        isListPage,
+        siteMetadata,
+        posts,
+        countOfInitialPost,
+        count,
+        initialCategory,
+        indexTitle: 'ALL POSTS',
+        bio: true,
+      }}
+    />
   )
 }
 

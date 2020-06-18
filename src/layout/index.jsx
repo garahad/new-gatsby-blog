@@ -80,9 +80,7 @@ export const categoryQuery = graphql`
   }
 `
 
-export const Layout = ({ location, title, children }) => {
-  const isListPage = location.pathname.slice(1).split('/').length < 3
-
+export const Layout = ({ location, title, children, isListPage }) => {
   const rootPath = `${__PATH_PREFIX__}/`
 
   const data = useStaticQuery(categoryQuery)
@@ -110,8 +108,6 @@ export const Layout = ({ location, title, children }) => {
         rootPath={rootPath}
         posts={posts}
         categories={categories}
-        category={category}
-        selectCategory={setCategory}
         categoryObj={categoryObj}
       />
       <div
@@ -123,11 +119,10 @@ export const Layout = ({ location, title, children }) => {
         <div css={categoryCss}>
           <Category
             categories={categories}
-            category={category}
-            selectCategory={setCategory}
             categoryObj={categoryObj}
             posts={posts}
             location={location}
+            isListPage={isListPage}
           />
         </div>
         <div></div>
@@ -136,7 +131,6 @@ export const Layout = ({ location, title, children }) => {
             marginLeft: `auto`,
             marginRight: `auto`,
             maxWidth: rhythm(30),
-            // minWidth: rhythm(25),
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
           }}
         >
