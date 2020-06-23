@@ -1,20 +1,20 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import _ from 'lodash'
+import React from 'react';
+import { Link } from 'gatsby';
+import _ from 'lodash';
 
 export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
-  let locationName = location.pathname
+  let locationName = location.pathname;
   if (location.pathname[location.pathname.length - 1] === '/') {
-    locationName = location.pathname.slice(0, -1)
+    locationName = location.pathname.slice(0, -1);
   }
-  let nowCategory = locationName.split('/')[1]
-  let nowSubCategory
+  let nowCategory = locationName.split('/')[1];
+  let nowSubCategory;
 
   if (
     (isListPage && locationName.split('/').length === 3) ||
     (!isListPage && locationName.split('/').length >= 4)
   ) {
-    nowSubCategory = locationName.split('/')[2]
+    nowSubCategory = locationName.split('/')[2];
   }
 
   const subCategories =
@@ -23,7 +23,7 @@ export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
       categoryObj
         .filter((oneObj) => Object.keys(oneObj)[0] === title)
         .map((Obj) => Object.values(Obj)[0]),
-    )
+    );
 
   const subCategoryList =
     subCategories &&
@@ -36,30 +36,30 @@ export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
             (elm.node.frontmatter.subcategory
               ? elm.node.frontmatter.subcategory === oneSub
               : false),
-        ).length
+        ).length;
 
       return (
         <div key={oneSub}>
-          <div>
-            <Link
-              to={`/${title}/${oneSub}`}
-              style={{
-                color:
-                  nowSubCategory && nowSubCategory === oneSub
-                    ? '#d8cd8d'
-                    : 'white',
-              }}
-            >
-              - {oneSub} ({subCategoryBlogNumber})
-            </Link>
-          </div>
+          <Link
+            to={`/${title}/${oneSub}`}
+            style={{
+              color:
+                nowSubCategory &&
+                nowSubCategory === oneSub &&
+                nowCategory === title
+                  ? '#d8cd8d'
+                  : 'white',
+            }}
+          >
+            - {oneSub} ({subCategoryBlogNumber})
+          </Link>
         </div>
-      )
-    })
+      );
+    });
 
   const categoryBlogNumber =
     posts &&
-    posts.filter((elm) => elm.node.frontmatter.category === title).length
+    posts.filter((elm) => elm.node.frontmatter.category === title).length;
 
   return (
     <div style={{ marginBottom: '1.5em', fontSize: '0.9rem' }}>
@@ -78,5 +78,5 @@ export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
         <div style={{ marginLeft: '1em' }}>{subCategoryList}</div>
       ) : null}
     </div>
-  )
-}
+  );
+};

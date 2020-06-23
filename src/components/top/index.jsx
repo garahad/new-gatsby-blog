@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
-import { useState } from 'react'
-import { Link } from 'gatsby'
-import _ from 'lodash'
+import { css, jsx } from '@emotion/core';
+import { useState } from 'react';
+import { Link } from 'gatsby';
+import _ from 'lodash';
 
-import './index.scss'
-import { Category } from '../category'
+import './index.scss';
+import { Category } from '../category';
 
 const categoryMark = css`
   position: relative;
@@ -48,15 +48,15 @@ const categoryMark = css`
   @media (min-width: 1000px) {
     display: none;
   }
-`
+`;
 
 const toggleCategoryCss = css`
   background-color: black;
   z-index: 2;
-`
+`;
 
 export const Top = ({ title, location, posts, categories, categoryObj }) => {
-  const [isCategoryOpen, setCategoryToggle] = useState(false)
+  const [isCategoryOpen, setCategoryToggle] = useState(false);
 
   return (
     <div className="top" style={{ position: 'fixed' }}>
@@ -64,7 +64,7 @@ export const Top = ({ title, location, posts, categories, categoryObj }) => {
         css={categoryMark}
         className={isCategoryOpen ? 'active' : ''}
         onClick={() => {
-          setCategoryToggle(!isCategoryOpen)
+          setCategoryToggle(!isCategoryOpen);
         }}
       ></button>
       <Link to={`/`} className="link">
@@ -86,5 +86,5 @@ export const Top = ({ title, location, posts, categories, categoryObj }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
