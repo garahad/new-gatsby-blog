@@ -1,19 +1,19 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import _ from 'lodash'
+import React from 'react';
+import { graphql } from 'gatsby';
+import _ from 'lodash';
 
-import useIndexHooks from '../hooks/useIndexHooks'
-import IndexPage from '../layout/IndexPage'
+import useIndexHooks from '../hooks/useIndexHooks';
+import IndexPage from '../layout/IndexPage';
 
 export default ({ data, location }) => {
-  const posts = data.allMarkdownRemark.edges
+  const posts = data.allMarkdownRemark.edges;
   const {
     isListPage,
     siteMetadata,
     countOfInitialPost,
     count,
     initialCategory,
-  } = useIndexHooks({ data, posts })
+  } = useIndexHooks({ data, posts });
 
   return (
     <IndexPage
@@ -29,8 +29,8 @@ export default ({ data, location }) => {
         bio: true,
       }}
     />
-  )
-}
+  );
+};
 
 export const pageQuery = graphql`
   query {
@@ -58,8 +58,9 @@ export const pageQuery = graphql`
             category
             draft
           }
+          timeToRead
         }
       }
     }
   }
-`
+`;
