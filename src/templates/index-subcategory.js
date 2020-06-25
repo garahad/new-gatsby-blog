@@ -70,6 +70,7 @@ export const categoryQuery = graphql`
             subcategory
             draft
           }
+          timeToRead
         }
       }
     }
