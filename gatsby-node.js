@@ -71,6 +71,10 @@ exports.createPages = ({ graphql, actions }) => {
       createPage({
         path: `/${onePair[0]}/${onePair[1]}/`,
         component: path.resolve(`./src/templates/index-subcategory.js`),
+        context: {
+          nowCategory: onePair[0],
+          nowSubCategory: onePair[1],
+        },
       });
     });
 
@@ -78,6 +82,9 @@ exports.createPages = ({ graphql, actions }) => {
       createPage({
         path: `/${oneCate}/`,
         component: path.resolve(`./src/templates/index-category.js`),
+        context: {
+          nowCategory: oneCate,
+        },
       });
     });
 

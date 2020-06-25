@@ -5,16 +5,11 @@ import { graphql } from 'gatsby';
 import useIndexHooks from '../hooks/useIndexHooks';
 import IndexPage from '../layout/IndexPage';
 
-export default ({ data, location }) => {
-  let nowCategory = location.pathname.slice(1);
-  if (nowCategory[nowCategory.length - 1] === '/') {
-    nowCategory = nowCategory.slice(0, -1);
-  }
-
+export default ({ data, location, pageContext }) => {
   const posts =
     data &&
     data.allMarkdownRemark.edges.filter(
-      (el) => el.node.frontmatter.category === nowCategory,
+      (el) => el.node.frontmatter.category === pageContext.nowCategory,
     );
 
   const {
@@ -35,7 +30,7 @@ export default ({ data, location }) => {
         countOfInitialPost,
         count,
         initialCategory,
-        indexTitle: nowCategory,
+        indexTitle: pageContext.nowCategory,
         bio: false,
       }}
     />
