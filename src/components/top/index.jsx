@@ -6,14 +6,21 @@ import _ from 'lodash';
 
 import './index.scss';
 import { Category } from '../category';
+import { rhythm } from '../../utils/typography';
+
+const topCss = css`
+  @media (min-width: 1000px) {
+    display: none;
+  }
+`;
 
 const categoryMark = css`
   position: relative;
   width: 20px;
   height: 20px;
-  margin-left: 10px;
+  margin-right: 1em;
   border: none;
-  background: linear-gradient(to bottom, #282c35, #282c35) no-repeat center;
+  background: linear-gradient(to bottom, white, white) no-repeat center;
   background-size: 100% 20%;
   transition: background-size 0.3s ease-in-out;
   cursor: pointer;
@@ -26,7 +33,7 @@ const categoryMark = css`
     left: 0;
     width: 100%;
     height: 20%;
-    background-color: #282c35;
+    background-color: white;
     transition: transform 0.3s ease-in-out;
   }
   &:before {
@@ -50,41 +57,59 @@ const categoryMark = css`
   }
 `;
 
-const toggleCategoryCss = css`
-  background-color: black;
-  z-index: 2;
-`;
+// const toggleCategoryCss = css`
+//   background-color: black;
+//   z-index: 2;
+// `;
 
-export const Top = ({ title, location, posts, categories, categoryObj }) => {
-  const [isCategoryOpen, setCategoryToggle] = useState(false);
+export const Top = ({
+  title,
+  location,
+  posts,
+  categories,
+  categoryObj,
+  isCategoryOpen,
+  setCategoryToggle,
+}) => {
+  // const [isCategoryOpen, setCategoryToggle] = useState(false);
 
   return (
-    <div className="top" style={{ position: 'fixed' }}>
+    <div
+      className="top"
+      css={topCss}
+      // onBlur={() => {
+      //   setCategoryToggle(false);
+      // }}
+    >
       <button
         css={categoryMark}
         className={isCategoryOpen ? 'active' : ''}
-        onClick={() => {
+        onClick={(e) => {
           setCategoryToggle(!isCategoryOpen);
         }}
       ></button>
-      <Link to={`/`} className="link">
+      <Link to={`/`} className="link" style={{ marginLeft: 0, paddingLeft: 0 }}>
         {title}
       </Link>
+
       {/* )} */}
       {/* <GitHubIcon /> */}
-      <div
-        style={{
-          display: isCategoryOpen ? 'block' : 'none',
-        }}
-        css={toggleCategoryCss}
-      >
-        <Category
-          categories={categories}
-          categoryObj={categoryObj}
-          posts={posts}
-          location={location}
-        />
-      </div>
+      {/* <div
+               style={{
+                 display: isCategoryOpen ? 'block' : 'none',
+               }}
+               css={toggleCategoryCss}
+             >
+               <Category
+                 {...{
+                   categories,
+                   categoryObj,
+                   posts,
+                   location,
+                   setCategoryToggle,
+                 }}
+               />
+             </div> */}
     </div>
   );
 };

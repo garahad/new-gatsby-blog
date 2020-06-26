@@ -1,15 +1,17 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
-import _ from 'lodash'
+import { css, jsx } from '@emotion/core';
+import _ from 'lodash';
 
-import { Layout } from '../layout'
-import { Contents } from '../components/contents'
-import Bio from '../components/bio'
+import { Layout } from '../layout';
+import { Contents } from '../components/contents';
+import Bio from '../components/bio';
 
 const h1Css = css`
   margin-bottom: 0.5em;
   margin-top: 0;
-`
+  font-size: 1.5rem;
+  line-height: 2rem;
+`;
 
 export default function IndexPage({
   location,
@@ -31,5 +33,5 @@ export default function IndexPage({
         category={initialCategory}
       />
     </Layout>
-  )
+  );
 }

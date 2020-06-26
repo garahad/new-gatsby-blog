@@ -1,44 +1,43 @@
-import React, { useState, useEffect } from 'react'
-import { graphql } from 'gatsby'
+import React, { useEffect } from 'react';
+import { graphql } from 'gatsby';
 
-import * as Elements from '../components/elements'
-import { Layout } from '../layout'
-import { Head } from '../components/head'
-import { PostTitle } from '../components/post-title'
-import { PostDate } from '../components/post-date'
-import { PostContainer } from '../components/post-container'
-import { SocialShare } from '../components/social-share'
+import * as Elements from '../components/elements';
+import { Layout } from '../layout';
+import { Head } from '../components/head';
+import { PostTitle } from '../components/post-title';
+import { PostDate } from '../components/post-date';
+import { PostContainer } from '../components/post-container';
+import { SocialShare } from '../components/social-share';
 // import { SponsorButton } from '../components/sponsor-button'
-import { Bio } from '../components/bio'
-import { PostNavigator } from '../components/post-navigator'
+import { Bio } from '../components/bio';
+import { PostNavigator } from '../components/post-navigator';
 // import { Disqus } from '../components/disqus'
-import { Utterences } from '../components/utterances'
-import * as ScrollManager from '../utils/scroll'
-// import * as Storage from '../utils/storage'
+import { Utterences } from '../components/utterances';
+import * as ScrollManager from '../utils/scroll';
 
-import '../styles/code.scss'
-import 'katex/dist/katex.min.css'
-// import { CATEGORY_TYPE } from '../constants'
+import '../styles/code.scss';
+import 'katex/dist/katex.min.css';
 
 export default ({ data, pageContext, location }) => {
   useEffect(() => {
-    ScrollManager.init()
-    return () => ScrollManager.destroy()
-  }, [])
+    ScrollManager.init();
+    return () => ScrollManager.destroy();
+  }, []);
 
-  const post = data.markdownRemark
-  const metaData = data.site.siteMetadata
-  const { title, comment, siteUrl, author, sponsor } = metaData
-  const { disqusShortName, utterances } = comment
-  const { title: postTitle, date, thumbnail } = post.frontmatter
+  const post = data.markdownRemark;
+  const metaData = data.site.siteMetadata;
+  const { title, comment, siteUrl, author, sponsor } = metaData;
+  const { disqusShortName, utterances } = comment;
+  const { title: postTitle, date, thumbnail } = post.frontmatter;
   const thumbnailSrc = thumbnail
     ? `${siteUrl}${thumbnail.childImageSharp.fixed.src}`
-    : undefined
+    : undefined;
 
-  const isListPage = false
+  const isListPage = false;
+  const tableOfContents = post.tableOfContents;
 
   return (
-    <Layout {...{ title, location, isListPage }}>
+    <Layout {...{ title, location, isListPage, tableOfContents }}>
       <Head
         title={postTitle}
         description={post.excerpt}
@@ -64,8 +63,8 @@ export default ({ data, pageContext, location }) => {
       )} */}
       {!!utterances && <Utterences repo={utterances} />}
     </Layout>
-  )
-}
+  );
+};
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -75,21 +74,22 @@ export const pageQuery = graphql`
         author
         siteUrl
         comment {
-          disqusShortName
+          # disqusShortName
           utterances
         }
-        sponsor {
-          buyMeACoffeeId
-        }
+        # sponsor {
+        #   buyMeACoffeeId
+        # }
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
-      excerpt(pruneLength: 280)
+      # excerpt(pruneLength: 280)
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        # date(formatString: "MMMM DD, YYYY")
+        date(formatString: "YYYY-MM-DD")
         # thumbnail {
         #   childImageSharp {
         #     fixed(width: 800) {
@@ -98,6 +98,7 @@ export const pageQuery = graphql`
         #   }
         # }
       }
+      tableOfContents
     }
   }
-`
+`;

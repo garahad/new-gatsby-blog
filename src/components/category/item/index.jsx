@@ -1,8 +1,23 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import React from 'react';
 import { Link } from 'gatsby';
 import _ from 'lodash';
 
-export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
+const hoverCss = css`
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Item = ({
+  title,
+  categoryObj,
+  posts,
+  location,
+  isListPage,
+  setCategoryToggle,
+}) => {
   let locationName = location.pathname;
   if (location.pathname[location.pathname.length - 1] === '/') {
     locationName = location.pathname.slice(0, -1);
@@ -50,6 +65,8 @@ export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
                   ? '#d8cd8d'
                   : 'white',
             }}
+            css={hoverCss}
+            onClick={() => setCategoryToggle(false)}
           >
             - {oneSub} ({subCategoryBlogNumber})
           </Link>
@@ -70,6 +87,8 @@ export const Item = ({ title, categoryObj, posts, location, isListPage }) => {
             color:
               !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'white',
           }}
+          css={hoverCss}
+          onClick={() => setCategoryToggle(false)}
         >
           {title} ({categoryBlogNumber})
         </Link>

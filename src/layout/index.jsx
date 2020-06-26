@@ -2,38 +2,55 @@
 import { css, jsx } from '@emotion/core';
 
 import React, { useState, useEffect } from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link } from 'gatsby';
 import _ from 'lodash';
+// import * as Scroll from 'react-scroll';
+// import {
+//   Link,
+//   Element,
+//   Events,
+//   animateScroll as scroll,
+//   scrollSpy,
+//   scroller,
+// } from 'react-scroll';
 
 import { Top } from '../components/top';
-import { Header } from '../components/header';
-// import { ThemeSwitch } from '../components/theme-switch'
 import { Footer } from '../components/footer';
 import { rhythm } from '../utils/typography';
 import * as Dom from '../utils/dom';
-import * as Storage from '../utils/storage';
-import * as ScrollManager from '../utils/scroll';
 
 import './index.scss';
-import { THEME, CATEGORY_TYPE } from '../constants';
+import { THEME } from '../constants';
 import { Category } from '../components/category';
+
+const homeTitleCss = css`
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 800;
+  color: #d8cd8d;
+`;
 
 const containerCss = css`
   display: grid;
-  padding-top: 60px;
-  grid-template-columns: 15em 1fr 15em;
   width: 100%;
   @media (max-width: 1000px) {
     display: block;
   }
 `;
+
+const toggleCategoryCss = css`
+  background-color: black;
+  z-index: 2;
+`;
+
 // 왜 이 100%표시가 안 붙으면 100%가 다 안 찰까?
 
 // 왜 실제 변화는 880 px 에서 일어나지?? box-sizing 때문인듯.
 const categoryCss = css`
-  border-right: 0.1px solid gray;
+  padding-top: ${rhythm(1.5)};
+  margin-left: ${rhythm(2)};
   position: fixed;
-  width: 15em;
+  width: 12em;
   height: 100%;
   @media (max-width: 1000px) {
     display: none;
@@ -42,9 +59,29 @@ const categoryCss = css`
 `;
 
 const indexBarCss = css`
+  position: fixed;
+  top: 60px;
+  margin-top: ${rhythm(1.5)};
   @media (max-width: 1000px) {
     display: none;
   }
+  white-space: nowrap;
+  font-size: 0.9em;
+  width: calc((100vw - 228px - 49rem) / 2 - 2.03125rem);
+
+  ol,
+  ul {
+    list-style: none;
+    margin-left: 1.015625rem;
+    margin-bottom: 0;
+    li {
+      margin-bottom: 0.2em;
+      a {
+        color: inherit;
+      }
+    }
+  }
+  border-left: 5px solid #43464d;
 `;
 
 export const categoryQuery = graphql`
@@ -58,7 +95,7 @@ export const categoryQuery = graphql`
     #   }
     # }
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { fields: [frontmatter___category], order: ASC }
       filter: { frontmatter: { category: { ne: null }, draft: { eq: false } } }
     ) {
       edges {
@@ -68,7 +105,8 @@ export const categoryQuery = graphql`
           #   slug
           # }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
+            # date(formatString: "MMMM DD, YYYY")
+            date(formatString: "YYYY-MM-DD")
             # title
             category
             subcategory
@@ -80,7 +118,13 @@ export const categoryQuery = graphql`
   }
 `;
 
-export const Layout = ({ location, title, children, isListPage }) => {
+export const Layout = ({
+  location,
+  title,
+  children,
+  isListPage,
+  tableOfContents,
+}) => {
   const rootPath = `${__PATH_PREFIX__}/`;
 
   const data = useStaticQuery(categoryQuery);
@@ -89,11 +133,12 @@ export const Layout = ({ location, title, children, isListPage }) => {
   const categoryObj = posts
     .filter(({ node }) => node.frontmatter.subcategory)
     .map(({ node }) => {
-      return { [node.frontmatter.category]: node.frontmatter.subcategory };
+      return {
+        [node.frontmatter.category]: node.frontmatter.subcategory,
+      };
     });
 
-  const initialCategory = Storage.getCategory(CATEGORY_TYPE.ALL);
-  const [category, setCategory] = useState(initialCategory);
+  const [isCategoryOpen, setCategoryToggle] = useState(false);
 
   useEffect(() => {
     Dom.addClassToBody(THEME.DARK);
@@ -102,42 +147,107 @@ export const Layout = ({ location, title, children, isListPage }) => {
 
   return (
     <React.Fragment>
-      <Top
-        title={title}
-        location={location}
-        rootPath={rootPath}
-        posts={posts}
-        categories={categories}
-        categoryObj={categoryObj}
-      />
       <div
         css={containerCss}
         style={{
-          gridTemplateColumns: isListPage ? '15em 1fr' : '15em 1fr 15em',
+          gridTemplateColumns: '16em 1fr 16em',
         }}
       >
         <div css={categoryCss}>
+          <div style={{ marginBottom: '1em' }}>
+            <Link to="/" css={homeTitleCss}>
+              코딩과 투자
+            </Link>
+          </div>
           <Category
-            categories={categories}
-            categoryObj={categoryObj}
-            posts={posts}
-            location={location}
-            isListPage={isListPage}
+            {...{ categories, categoryObj, posts, location, isListPage }}
+            setCategoryToggle={() => null}
           />
         </div>
         <div></div>
-        <div
-          style={{
-            marginLeft: `auto`,
-            marginRight: `auto`,
-            maxWidth: rhythm(30),
-            padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-          }}
-        >
-          {children}
+        {/* position fixed는 grid안에 포함이 안돼서 위의 빈 div를 만들어서 그것 대신하게 함  */}
+        <div>
+          <div style={{ backgroundColor: 'black' }}>
+            <div
+              style={{
+                marginLeft: `auto`,
+                marginRight: `auto`,
+                maxWidth: rhythm(30),
+                padding: `0 ${rhythm(2)}`,
+              }}
+            >
+              <Top
+                {...{
+                  title,
+                  location,
+                  rootPath,
+                  posts,
+                  categories,
+                  categoryObj,
+                  isCategoryOpen,
+                  setCategoryToggle,
+                }}
+              />
+            </div>
+            <div
+              style={{
+                display: isCategoryOpen ? 'block' : 'none',
+                position: 'fixed',
+                width: '100%',
+                // marginTop: '60px',
+              }}
+              css={toggleCategoryCss}
+            >
+              <div
+                style={{
+                  marginLeft: `auto`,
+                  marginRight: `auto`,
+                  maxWidth: rhythm(30),
+                  padding: `0 ${rhythm(2)}`,
+                }}
+              >
+                <Category
+                  {...{
+                    categories,
+                    categoryObj,
+                    posts,
+                    location,
+                    setCategoryToggle,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              marginLeft: `auto`,
+              marginRight: `auto`,
+              maxWidth: rhythm(30),
+              padding: `${rhythm(1.5)} ${rhythm(2)}`,
+            }}
+          >
+            {children}
+          </div>
         </div>
+
+        {isListPage ? (
+          <div></div>
+        ) : (
+          <div css={{ position: 'relative' }}>
+            <div
+              css={indexBarCss}
+              dangerouslySetInnerHTML={{ __html: tableOfContents }}
+              onClick={() => {
+                // document.getElementById('me').scrollTo(0, 60);
+                // setTimeout(() => {
+                //   scroll.scrollTo(600);
+                // }, 100);
+              }}
+            ></div>
+          </div>
+        )}
       </div>
-      {isListPage ? null : <div css={indexBarCss}></div>}
 
       <Footer />
     </React.Fragment>
