@@ -9,7 +9,7 @@ draft: false
 다음은 1분 코딩의 레이아웃 강의를 보고 요약한 글이다  
 [1분코딩 레이아웃 강의](https://www.youtube.com/watch?v=Zny5Vxqk6Mk)
 
-## <inline-block으로 2단 칼럼 만들기>
+## inline-block으로 2단 칼럼 만들기
 
 - 반응형으로 만들어야 하기 때문에 width 같은건 % 많이 씀.
   <br /><br />
@@ -64,7 +64,7 @@ draft: false
 
 ---
 
-## <float으로 2단 칼럼 만들기>
+## float으로 2단 칼럼 만들기
 
 - float 이라고 하면 div로 막아도 아래쪽 가서 붙네. clear: both를 해줘야 함.<br/><br/>
 
