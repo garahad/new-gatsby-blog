@@ -63,7 +63,7 @@ export const Item = ({
                 nowSubCategory === oneSub &&
                 nowCategory === title
                   ? '#d8cd8d'
-                  : 'white',
+                  : 'silver',
             }}
             css={hoverCss}
             onClick={() => setCategoryToggle(false)}
@@ -85,7 +85,7 @@ export const Item = ({
           to={`/${title}`}
           style={{
             color:
-              !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'white',
+              !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'silver',
           }}
           css={hoverCss}
           onClick={() => setCategoryToggle(false)}
