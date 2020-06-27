@@ -60,7 +60,6 @@ const categoryCss = css`
 
 const indexBarCss = css`
   position: fixed;
-  top: 60px;
   margin-top: ${rhythm(1.5)};
   @media (max-width: 1000px) {
     display: none;
@@ -77,7 +76,7 @@ const indexBarCss = css`
     li {
       margin-bottom: 0.2em;
       a {
-        color: inherit;
+        color: silver;
       }
     }
   }
