@@ -4,6 +4,7 @@ import { css, jsx } from '@emotion/core';
 import React, { useState, useEffect } from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import _ from 'lodash';
+import Headroom from 'react-headroom';
 // import * as Scroll from 'react-scroll';
 // import {
 //   Link,
@@ -166,7 +167,11 @@ export const Layout = ({
         <div></div>
         {/* position fixed는 grid안에 포함이 안돼서 위의 빈 div를 만들어서 그것 대신하게 함  */}
         <div>
-          <div style={{ backgroundColor: 'black' }}>
+          <Headroom
+            style={{
+              background: 'black',
+            }}
+          >
             <div
               style={{
                 marginLeft: `auto`,
@@ -216,7 +221,7 @@ export const Layout = ({
                 />
               </div>
             </div>
-          </div>
+          </Headroom>
 
           <div
             style={{
