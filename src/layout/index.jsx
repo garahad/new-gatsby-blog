@@ -22,6 +22,7 @@ import * as Dom from '../utils/dom';
 import './index.scss';
 import { THEME } from '../constants';
 import { Category } from '../components/category';
+import Headroom from 'react-headroom';
 
 const homeTitleCss = css`
   font-size: 2rem;
@@ -166,7 +167,7 @@ export const Layout = ({
         <div></div>
         {/* position fixed는 grid안에 포함이 안돼서 위의 빈 div를 만들어서 그것 대신하게 함  */}
         <div>
-          <div style={{ backgroundColor: 'black' }}>
+          <Headroom style={{ backgroundColor: 'black' }}>
             <div
               style={{
                 marginLeft: `auto`,
@@ -216,7 +217,7 @@ export const Layout = ({
                 />
               </div>
             </div>
-          </div>
+          </Headroom>
 
           <div
             style={{
