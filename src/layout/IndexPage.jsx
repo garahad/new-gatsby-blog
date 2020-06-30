@@ -8,7 +8,7 @@ import Bio from '../components/bio';
 
 const h1Css = css`
   margin-bottom: 0.5em;
-  margin-top: 0;
+  margin-top: 0.5em;
   font-size: 1.5rem;
   line-height: 2rem;
 `;

@@ -18,8 +18,10 @@ export const Category = ({
       id="category"
       style={{
         listStyleType: 'none',
-        padding: `${rhythm(0.5)} 0`,
+        // padding: `${rhythm(0.5)} 0`,
         marginLeft: 0,
+        borderLeft: '2px solid #43464d',
+        padding: '0 0 0 1em',
       }}
     >
       {categories.map((item, idx) => (

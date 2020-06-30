@@ -1,18 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import _ from 'lodash';
-// import * as Scroll from 'react-scroll';
-// import {
-//   Link,
-//   Element,
-//   Events,
-//   animateScroll as scroll,
-//   scrollSpy,
-//   scroller,
-// } from 'react-scroll';
 
 import { Top } from '../components/top';
 import { Footer } from '../components/footer';
@@ -22,8 +13,10 @@ import * as Dom from '../utils/dom';
 import './index.scss';
 import { THEME } from '../constants';
 import { Category } from '../components/category';
+// import Headroom from 'react-headroom';
+import Headroom from 'headroom.js';
 
-const homeTitleCss = css`
+const homeTitleLinkCss = css`
   font-size: 2rem;
   line-height: 2rem;
   font-weight: 800;
@@ -32,6 +25,7 @@ const homeTitleCss = css`
 
 const containerCss = css`
   display: grid;
+  grid-template-columns: 16em 1fr 16em;
   width: 100%;
   @media (max-width: 1000px) {
     display: block;
@@ -41,9 +35,17 @@ const containerCss = css`
 const toggleCategoryCss = css`
   background-color: black;
   z-index: 2;
+  position: fixed;
+  margin-top: 60px;
+  width: 100%;
 `;
-
 // 왜 이 100%표시가 안 붙으면 100%가 다 안 찰까?
+
+const toggleCategoryContent = css`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: ${rhythm(30)};
+`;
 
 // 왜 실제 변화는 880 px 에서 일어나지?? box-sizing 때문인듯.
 const categoryCss = css`
@@ -83,33 +85,34 @@ const indexBarCss = css`
   border-left: 5px solid #43464d;
 `;
 
+const tapWrapperCss = css`
+  max-width: ${rhythm(30)};
+  padding: 0 ${rhythm(2)};
+`;
+
+// padding: ${rhythm(1.5)} ${rhythm(2)};
+
+const childrenWrapper = css`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: ${rhythm(30)};
+  padding: 60px ${rhythm(2)};
+  margin-top: 0.5em;
+`;
+
 export const categoryQuery = graphql`
   query {
-    # site {
-    #   siteMetadata {
-    #     title
-    #     configs {
-    #       countOfInitialPost
-    #     }
-    #   }
-    # }
     allMarkdownRemark(
       sort: { fields: [frontmatter___category], order: ASC }
       filter: { frontmatter: { category: { ne: null }, draft: { eq: false } } }
     ) {
       edges {
         node {
-          # excerpt(pruneLength: 200, truncate: true)
-          # fields {
-          #   slug
-          # }
           frontmatter {
             # date(formatString: "MMMM DD, YYYY")
             date(formatString: "YYYY-MM-DD")
-            # title
             category
             subcategory
-            # draft
           }
         }
       }
@@ -139,6 +142,16 @@ export const Layout = ({
 
   const [isCategoryOpen, setCategoryToggle] = useState(false);
 
+  const refHeader = useRef();
+  const headroom = useRef();
+
+  useEffect(() => {
+    headroom.current = new Headroom(refHeader.current);
+    headroom.current.init();
+
+    return () => headroom.current.destroy();
+  }, []);
+
   useEffect(() => {
     Dom.addClassToBody(THEME.DARK);
     Dom.removeClassToBody(THEME.LIGHT);
@@ -146,15 +159,10 @@ export const Layout = ({
 
   return (
     <React.Fragment>
-      <div
-        css={containerCss}
-        style={{
-          gridTemplateColumns: '16em 1fr 16em',
-        }}
-      >
+      <div css={containerCss}>
         <div css={categoryCss}>
           <div style={{ marginBottom: '1em' }}>
-            <Link to="/" css={homeTitleCss}>
+            <Link to="/" css={homeTitleLinkCss}>
               코딩과 투자
             </Link>
           </div>
@@ -166,15 +174,13 @@ export const Layout = ({
         <div></div>
         {/* position fixed는 grid안에 포함이 안돼서 위의 빈 div를 만들어서 그것 대신하게 함  */}
         <div>
-          <div style={{ backgroundColor: 'black' }}>
-            <div
-              style={{
-                marginLeft: `auto`,
-                marginRight: `auto`,
-                maxWidth: rhythm(30),
-                padding: `0 ${rhythm(2)}`,
-              }}
-            >
+          <div
+            style={{ backgroundColor: 'black' }}
+            ref={refHeader}
+            className="header"
+          >
+            <div css={tapWrapperCss}>
+              {/* <Headroom> */}
               <Top
                 {...{
                   title,
@@ -187,24 +193,15 @@ export const Layout = ({
                   setCategoryToggle,
                 }}
               />
+              {/* </Headroom> */}
             </div>
             <div
               style={{
                 display: isCategoryOpen ? 'block' : 'none',
-                position: 'fixed',
-                width: '100%',
-                // marginTop: '60px',
               }}
               css={toggleCategoryCss}
             >
-              <div
-                style={{
-                  marginLeft: `auto`,
-                  marginRight: `auto`,
-                  maxWidth: rhythm(30),
-                  padding: `0 ${rhythm(2)}`,
-                }}
-              >
+              <div css={toggleCategoryContent}>
                 <Category
                   {...{
                     categories,
@@ -218,16 +215,7 @@ export const Layout = ({
             </div>
           </div>
 
-          <div
-            style={{
-              marginLeft: `auto`,
-              marginRight: `auto`,
-              maxWidth: rhythm(30),
-              padding: `${rhythm(1.5)} ${rhythm(2)}`,
-            }}
-          >
-            {children}
-          </div>
+          <div css={childrenWrapper}>{children}</div>
         </div>
 
         {isListPage ? (
