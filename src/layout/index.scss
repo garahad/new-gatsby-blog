@@ -9,3 +9,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s;
 }
+
+.header {
+  flex-shrink: 0;
+  width: 228px;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 1000px) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-height: auto;
+    border-right: 0;
+    z-index: 1;
+  }
+
+  // headroom
+  @media screen and (max-width: 1000px) {
+    &.headroom {
+      will-change: transform;
+      transition: transform 200ms linear;
+    }
+    &.headroom--pinned {
+      transform: translateY(0%);
+    }
+    &.headroom--unpinned {
+      transform: translateY(-100%);
+    }
+  }
+}
