@@ -3,6 +3,7 @@ import { StaticQuery, graphql, Link } from 'gatsby';
 import Image from 'gatsby-image';
 
 import './index.scss';
+import { rhythm } from '../../utils/typography';
 
 export const Bio = () => (
   <StaticQuery
@@ -11,20 +12,25 @@ export const Bio = () => (
       const { author, social, introduction } = data.site.siteMetadata;
 
       return (
-        <div className="bio">
+        <div className="bio" style={{ marginBottom: `${rhythm(1.5)}` }}>
           <div className="author">
             <div className="author-description">
-              {/* <div> */}
-              <Image
-                className="author-image"
-                fixed={data.avatar.childImageSharp.fixed}
-                alt={author}
-                style={{
-                  borderRadius: `100%`,
-                }}
-              />
-              {/* </div> */}
-              <div className="author-name">
+              <div>
+                <Image
+                  className="author-image"
+                  fixed={data.avatar.childImageSharp.fixed}
+                  alt={author}
+                  style={{
+                    borderRadius: `100%`,
+                    padding: 0,
+                    margin: 0,
+                  }}
+                />
+              </div>
+              <div
+                className="author-name"
+                style={{ alignSelf: 'stretch', marginLeft: '1em' }}
+              >
                 {/* <span className="author-name-prefix">Written by</span> */}
                 <Link to={'/about'} className="author-name-content">
                   <span>@{author}</span>
@@ -64,7 +70,7 @@ export const Bio = () => (
 
 const bioQuery = graphql`
   query BioQuery {
-    avatar: file(absolutePath: { regex: "/profile.jpeg/" }) {
+    avatar: file(absolutePath: { regex: "/profile.png/" }) {
       childImageSharp {
         fixed(width: 72, height: 72) {
           ...GatsbyImageSharpFixed

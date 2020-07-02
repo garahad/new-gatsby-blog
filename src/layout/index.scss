@@ -11,19 +11,27 @@ body {
 }
 
 .header {
-  flex-shrink: 0;
-  width: 228px;
-  display: flex;
-  flex-direction: column;
+  // flex-shrink: 0;
+  // width: 228px;
+  // display: flex;
+  // flex-direction: column;
 
   @media screen and (max-width: 1000px) {
     position: fixed;
     top: 0;
     width: 100%;
     min-height: auto;
-    border-right: 0;
+    // border-right: 0;
     z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
   }
+
+  // margin-left: auto;
+  //   margin-right: auto;
+  //   max-width: ${rhythm(30)};
+  //   padding: 0 ${rhythm(2)};
+  //   margin-top: ${rhythm(1.5)};
 
   // headroom
   @media screen and (max-width: 1000px) {

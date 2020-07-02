@@ -2,7 +2,7 @@ module.exports = {
   title: `코딩과 투자`,
   description: `Blog posted about ...`,
   author: `용크셔`,
-  introduction: `Feel the fear and do it anyway`,
+  introduction: `행함이 기적을 만든다`,
   siteUrl: `https://gatsby-starter-bee.netlify.com`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
