@@ -1,4 +1,5 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { Link } from 'gatsby';
 
 import { TARGET_CLASS } from '../../utils/visible';
