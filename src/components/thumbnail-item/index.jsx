@@ -1,15 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React from 'react';
 import { Link } from 'gatsby';
+
 import { TARGET_CLASS } from '../../utils/visible';
-
 import './index.scss';
-
-const readingTimeCss = css`
-  font-size: 0.8rem;
-  margin-bottom: 0.5em;
-  color: silver;
-`;
+import { readingTimeCss } from '../../styles/emotions';
 
 export function formatReadingTime(minutes) {
   let cups = Math.round(minutes / 5);
@@ -51,17 +45,8 @@ function formatDate(date) {
 
 export const ThumbnailItem = ({ node }) => (
   // <Link className={`thumbnail ${TARGET_CLASS}`} to={node.fields.slug}>
-  <div
-    key={node.fields.slug}
-    style={{
-      marginBottom: '2em',
-    }}
-  >
-    <h3
-      style={{
-        display: 'inline-block',
-      }}
-    >
+  <div key={node.fields.slug} style={{ marginBottom: '2em' }}>
+    <h3 style={{ display: 'inline-block' }}>
       <Link className={`thumbnail ${TARGET_CLASS}`} to={node.fields.slug}>
         {node.frontmatter.title || node.fields.slug}
       </Link>

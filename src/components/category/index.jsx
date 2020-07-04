@@ -1,9 +1,7 @@
 import React from 'react';
-
 import { Item } from './item';
-import { rhythm } from '../../utils/typography';
-
 import './index.scss';
+import { UL } from '../../styles/emotions';
 
 export const Category = ({
   categories,
@@ -14,16 +12,7 @@ export const Category = ({
   setCategoryToggle,
 }) => {
   return (
-    <ul
-      id="category"
-      style={{
-        listStyleType: 'none',
-        // padding: `${rhythm(0.5)} 0`,
-        marginLeft: 0,
-        borderLeft: '2px solid #43464d',
-        padding: '0 0 0 1em',
-      }}
-    >
+    <UL>
       {categories.map((item, idx) => (
         <Item
           {...{
@@ -37,6 +26,6 @@ export const Category = ({
           title={item}
         />
       ))}
-    </ul>
+    </UL>
   );
 };

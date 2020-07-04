@@ -1,17 +1,17 @@
 @import '../../styles/variables.scss';
 
 .bio {
-  margin-bottom: 24px;
+  // margin-bottom: 40px;
 
   .author-description {
     display: flex;
-    align-items: center;
+    // align-items: stretch;
   }
 
   .author-image {
-    margin-top: 12px;
-    margin-right: 12px;
-    margin-bottom: 0;
+    // margin-top: 12px;
+    // margin-right: 12px;
+    // margin-bottom: 0;
     min-width: 72px;
   }
 

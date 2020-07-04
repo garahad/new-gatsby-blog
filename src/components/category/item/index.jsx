@@ -1,14 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import React from 'react';
 import { Link } from 'gatsby';
 import _ from 'lodash';
-
-const hoverCss = css`
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import { useTheme } from 'emotion-theming';
+import { hoverCss } from '../../../styles/emotions';
 
 export const Item = ({
   title,
@@ -18,6 +12,8 @@ export const Item = ({
   isListPage,
   setCategoryToggle,
 }) => {
+  const theme = useTheme();
+
   let locationName = location.pathname;
   if (location.pathname[location.pathname.length - 1] === '/') {
     locationName = location.pathname.slice(0, -1);
@@ -62,7 +58,7 @@ export const Item = ({
                 nowSubCategory &&
                 nowSubCategory === oneSub &&
                 nowCategory === title
-                  ? '#d8cd8d'
+                  ? theme.colors.primary
                   : 'silver',
             }}
             css={hoverCss}
@@ -85,7 +81,9 @@ export const Item = ({
           to={`/${title}`}
           style={{
             color:
-              !nowSubCategory && nowCategory === title ? '#d8cd8d' : 'silver',
+              !nowSubCategory && nowCategory === title
+                ? theme.colors.primary
+                : 'silver',
           }}
           css={hoverCss}
           onClick={() => setCategoryToggle(false)}
