@@ -17,6 +17,10 @@ export default class HTML extends React.Component {
             name="google-site-verification"
             content="05gYo2bXjlmthOCZDzjHAUzn0ZNGLHtIXcid38dlvHM"
           />
+          <meta
+            name="naver-site-verification"
+            content="7ded045455f7f9a8e8b07a62b3bc5686c9f6c67f"
+          />
         </head>
         <body {...this.props.bodyAttributes}>
           {this.props.preBodyComponents}
