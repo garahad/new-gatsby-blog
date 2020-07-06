@@ -101,5 +101,13 @@ module.exports = {
     `gatsby-plugin-lodash`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-typescript`,
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://amkiwangblog.netlify.com',
+        sitemap: 'https://amkiwangblog.netlify.com/sitemap.xml',
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
   ],
 };

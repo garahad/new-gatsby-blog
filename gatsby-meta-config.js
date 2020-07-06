@@ -3,7 +3,7 @@ module.exports = {
   description: `Blog posted about ...`,
   author: `용크셔`,
   introduction: `행함이 기적을 만든다`,
-  siteUrl: `https://gatsby-starter-bee.netlify.com`, // Your blog site url
+  siteUrl: `https://amkiwangblog.netlify.com`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
     github: `https://github.com/garahad`, //
@@ -21,7 +21,7 @@ module.exports = {
     countOfInitialPost: 10, // Config your initial count of post
   },
   sponsor: {
-    buyMeACoffeeId: 'jbee',
+    buyMeACoffeeId: '',
   },
   share: {
     facebookAppId: '', // Add facebookAppId for using facebook share feature v3.2
