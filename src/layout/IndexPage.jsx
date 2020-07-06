@@ -5,6 +5,7 @@ import { Layout } from '../layout';
 import { Contents } from '../components/contents';
 import Bio from '../components/bio';
 import { H1 } from '../styles/emotions';
+import { Head } from '../components/head';
 
 export default function IndexPage({
   location,
@@ -19,6 +20,10 @@ export default function IndexPage({
 }) {
   return (
     <Layout {...{ location, isListPage }} title={siteMetadata.title}>
+      <Head
+        title={indexTitle === 'ALL POSTS' ? '코딩과 투자' : indexTitle}
+        description={indexTitle === 'ALL POSTS' ? '코딩과 투자' : indexTitle}
+      />
       {bio ? <Bio /> : null}
       <H1 bio={bio}>{indexTitle}</H1>
       <Contents
