@@ -1,8 +1,13 @@
 ---
-title: '데일리 첫글'
-date: 2020-6-11 16:21:13
+title: '블로그 시작'
+date: 2020-7-6 16:21:13
 category: 'daily'
 draft: false
 ---
 
-Sit aliquip dolore ipsum elit occaecat sit officia ipsum laborum eu eiusmod. Id nisi qui nisi ut ex duis cupidatat anim adipisicing sit. Occaecat pariatur consequat ipsum Lorem reprehenderit elit aliqua deserunt velit ullamco amet. Occaecat Lorem excepteur do pariatur sit. Et tempor ea est aliquip mollit nostrud esse officia eiusmod minim sit.
+나만의 공간을 만들고 싶어서 이렇게 블로그를 다시 시작하게 되었다.
+
+기존 티스토리 블로그는 다크모드도 그렇고 내가 커스터마이징을 할 수 없다보니 글을 많이 안 쓰게 되었던 것 같다.
+물론 내가 게을러서도 있지만 아무튼 그렇다.
+
+이제 온전한 내 공간인 이곳에 한번 글을 써보고 싶다.
