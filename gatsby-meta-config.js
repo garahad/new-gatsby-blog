@@ -3,7 +3,7 @@ module.exports = {
   description: `Blog posted about ...`,
   author: `용크셔`,
   introduction: `행함이 기적을 만든다`,
-  siteUrl: `https://amkiwangblog.netlify.com`, // Your blog site url
+  siteUrl: `https://amkiwangblog.netlify.app`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
     github: `https://github.com/garahad`, //

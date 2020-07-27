@@ -104,8 +104,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://amkiwangblog.netlify.com',
-        sitemap: 'https://amkiwangblog.netlify.com/sitemap.xml',
+        host: 'https://amkiwangblog.netlify.app',
+        sitemap: 'https://amkiwangblog.netlify.app/sitemap.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
